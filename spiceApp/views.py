@@ -45,12 +45,10 @@ class UserLoginView(APIView):
 										},
 								"status": 200,}
             user = User.objects.get(id = request.user.id)
-            # context = {"name":user.username,"type":user.get_user_type_display()}
-            # profile_response = profile_temp.render(context)
-            # print(context_dict)
-            context = {"name":"rahul"}
+            context = {"name":user.username,"type":user.get_user_type_display()}
             profile_response = profile_temp.render(context)
-            return HttpResponse(profile_response, content_type='application/json')
+            profile_response = profile_temp.render(context)
+            return HttpResponse(profile_response)
 
         else:
             error_data = serializer.errors
