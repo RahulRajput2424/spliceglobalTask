@@ -1,6 +1,7 @@
 import datetime
 from django.shortcuts import render
 from rest_framework import  generics
+from django.template import loader
 from rest_framework.views import APIView
 from django.http import HttpResponse
 from rest_framework.response import Response
@@ -9,6 +10,9 @@ from spiceApp.serializers import UserSignupSerializer, UserLoginSerializer
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import  login
 from rest_framework import status
+from rest_framework.renderers import TemplateHTMLRenderer
+from django.http import HttpResponse
+
 class UserSignupView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSignupSerializer
@@ -24,11 +28,14 @@ class UserSignupView(generics.CreateAPIView):
         })
 
 class UserLoginView(APIView):
+    
     authentication_classes = []
     permission_classes = []
     
     def post(self, request):
+       
         serializer = UserLoginSerializer(data=request.data)
+        profile_temp = loader.get_template('profile_temp.html')
         if serializer.is_valid():
             user = serializer.validated_data['user']
             login(request, user)
@@ -37,7 +44,14 @@ class UserLoginView(APIView):
 													  "token": str(token), 
 										},
 								"status": 200,}
-            return Response(response, status=status.HTTP_200_OK)
+            user = User.objects.get(id = request.user.id)
+            # context = {"name":user.username,"type":user.get_user_type_display()}
+            # profile_response = profile_temp.render(context)
+            # print(context_dict)
+            context = {"name":"rahul"}
+            profile_response = profile_temp.render(context)
+            return HttpResponse(profile_response, content_type='application/json')
+
         else:
             error_data = serializer.errors
             return Response(data=error_data)
