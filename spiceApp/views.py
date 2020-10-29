@@ -1,3 +1,21 @@
+import datetime
 from django.shortcuts import render
+from rest_framework import  generics
+from django.http import HttpResponse
+from rest_framework.response import Response
+from spiceApp.models import User
+from spiceApp.serializers import UserSignupSerializer
 
-# Create your views here.
+class UserSignupView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSignupSerializer
+    authentication_classes = []
+    permission_classes = []
+
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        return Response({
+            'status': 200,
+            'message': 'Successfully Created, Please Sign-In`',
+            'data': response.data
+        })
