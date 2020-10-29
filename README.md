@@ -1,4 +1,4 @@
-# SpliceglobalTask
+# Spliceglobal Task
 
 Step 1. Make a directory spliceGlobalTask <br />
 Step 2. create a virtual env using below command inside spliceGlobalTask folder <br />
