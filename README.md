@@ -1,5 +1,11 @@
 # SpliceglobalTask
 
+Step 1. Make a directory spliceGlobalTask <br />
+Step 2. create a virtual env using below command inside spliceGlobalTask folder <br />
+**python3 -m venv splicenv<br />**
+Step 4. Now clone the project using git clone <br />
+Step 5. Install all the dependency using pip3 install requirements.txt<br />
+Step 6. Run server using python3 manage.py runserver
 
 For the registration, **user_type value 1**  is used for vendor and **user_type value 2** is used for Bidder.
 
